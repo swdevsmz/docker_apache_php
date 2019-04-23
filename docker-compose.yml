@@ -1,0 +1,8 @@
+wiki:
+  image: 24c791995c1e
+  container_name: wiki
+  restart: always
+  ports:
+      - 80:80
+  volumes: 
+      - /Docker/wiki/html:/var/www/html  htmm
