@@ -5,4 +5,4 @@ wiki:
   ports:
       - 80:80
   volumes: 
-      - /Docker/wiki/html:/var/www/html  htmm
+      - /Docker/wiki/html:/var/www/html
