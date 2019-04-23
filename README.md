@@ -1,61 +1,27 @@
 # docker_apache_php
 
-$yum install epel-release
+## 最初にこのスクリプトを実行
+https://github.com/swdevsmz/Db2Developer-ConDocker/blob/master/init.sh
 
-$yum update
+## Docker公式phpイメージでpullするタグを検索
+https://hub.docker.com/_/php/
 
-$systemctl stop firewalld 
-$systemctl enable firewalld 
+## 少し古いイメージを取得
+docker pull php:5.6-apache
 
-#SELinuxの無効化
-#確認
-getenforce
+## イメージの確認
+docker images
 
-#無効化
-setenforce 0
+## wiki用ディレクトリを作成し、権限を付与
+mkdir /Docker
+cd Docker
+mkdir wiki
+cd wiki
+mkdir html
+chmod -R 777 html
 
-#有効化
-setenforce 1
+## composeファイルを編集
+vi docker-compose.yml
 
-$vi /etc/selinux/config
-SELINUX=enforcing
-↓
-SELINUX=disabled
-
-
-$yum -y install docker
-
-$docker version
-
-$ systemctl start docker.service
-$ systemctl enable docker.service
-
-$ mkdir php_apache
-$ cd php_apache/
-$ touch Dockerfile
-
-$ vi Dockerfile
-FROM php:7.2.7-apache
-
-$ docker build ./ -t php_apache_image:ver001
-
-$ docker images
-
-$ mkdir html
-$ cd html
-$ touch index.php
-
-$ vi index.php
-<?php echo 'Hello Docker'; ?>
-
-$ docker run -itd -p 80:80 -v /root/Docker/php_apache/html:/var/www/html --name wiki php_apache_image:ver001
-
-$ docker exec -it wiki /bin/bash
-
-$ docker start wiki
-$ docker stop wiki
-$ docker ps -al
-
-#ソースを展開、ディレクトリのパーミッションの設定  
-https://pukiwiki.osdn.jp/?PukiWiki/Install/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95#aa4d05e6
-
+## コンテナの起動
+docker-compose up -d
